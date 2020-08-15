@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">ADMIN</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link"  th:href="@{'/departs/list'}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/staff/list">List staffs</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/rank/rank">Rank</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/user/login">logout</a>
+      </li>
+    </ul>
+   
+  </div>
+</nav>
+	<div class="container">
+		<div class="card">
+			<div class="card-header">Records of Staff</div>
+			<div class="card-body">
+				<form th:action="@{/record/saveOredit}" method="post" th:object="${record}">
+					<div class="form-group">
+						<label>Staff ID:</label> <input type="text" th:field="*{staff.id}"
+							class="form-control" readonly="readonly">
+					</div>
+					<div class="form-group">
+						<label>Staff Name:</label> <input type="text" th:value="${record.staff.hoten}"
+							class="form-control" readonly="readonly">
+					</div>
+					<div class="form-group">
+						<label>Reason:</label> <input type="text" class="form-control"
+							th:field="*{reason}" placeholder="Reason">
+					</div>
+
+					<div class="form-group">
+						<label>Date:</label> <input type="text" class="form-control"
+							th:field="*{date}" placeholder="Date">
+					</div>
+					
+					<div class="form-group">
+						<label for="gt">Type:</label> <label>Thuong</label> 
+						<input type="radio" th:field="*{type}" value="true" id="gt"> <label>Phat</label>
+						<input type="radio" th:field="*{type}" value="false" id="gt">
+					</div>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</form>
+
+			</div>
+		</div>
+	</div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Reason</th>
+				<th scope="col">Type</th>
+				<th scope="col">Date</th>
+				<th scope="col">Staff</th>
+				<th scope="col"></th>
+
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="list:${records}">
+				<td th:text="${list.id}"></td>
+				<td th:text="${list.Reason}"></td>
+				<td th:text="${list.type?'Thuong':'Phat'}"></td>
+				<td th:text="${list.date}"></td>
+				<td th:text="${list.staff.hoten}"></td>
+			 <td>
+        <a  class="btn btn-outline-success" th:href="@{'/record/delete/' + ${list.id}}">Delete</a></td>
+			</tr>
+
+
+		</tbody>
+
+	</table>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+</body>
+</html>
